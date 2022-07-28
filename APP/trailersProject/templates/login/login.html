@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <title>Login</title>
+</head>
+<body>
+    
+    <div class="login-container">
+        <div class="login-card">
+            <form action="" method="POST">{%csrf_token%}
+                <div class="login-title">
+                    <h1>Login</h1>
+                </div>
+                {% if error %}
+                    <div class="login-error">
+                        <p>{{message}}</p>
+                    </div>
+                {% endif %}
+                
+                <div class="login-input">
+                    <input type="text" placeholder="Username" name="username" required>
+                </div>
+                <div class="login-input">
+                    <input type="password" placeholder="Password" name="password" required>
+                </div>
+                <div class="login-remember">
+                    <input type="checkbox" id="rememberme"name="rememberme">
+                    <label for="rememberme">Remember me</label>
+                </div>
+                <div class="login-loginbtn-container">
+                    <input type="submit" value="Login" class="login-loginbtn">
+                </div>
+            </form>
+        </div>
+    </div> 
+</body>
+</html>
+
+
+
