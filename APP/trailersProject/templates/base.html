@@ -9,9 +9,37 @@
     <title>Trailers web</title>
 </head>
 <body>
-    <div class="navBar">
+    <header>
+        <nav>
+            <div class="logo-container">
+                <a href="#">
+                    <img class="logo"src="{% static 'images/logo.png' %}" alt="logo">
+                    <h1>Trailers Project</h1>
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li>
+                    <a href="#">Trailers</a>
+                    <ul>
+                        <li><a href="#">Add</a></li>
+                        <li><a href="#">View all</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="#">Categories</a>
+                    <ul>
+                        <li><a href="#">Add</a></li>
+                        <li><a href="#">View all</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="nav-account">
+                <h1><a href="#">My account</a> / <a href="#"><button>Log out</button></a></h1>
+            </div>
+        </nav>
         
-    </div>
+    </header>
+   
     {% block content %}
     {% endblock content %}
 

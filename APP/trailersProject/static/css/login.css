@@ -22,8 +22,6 @@ html,body{
     width: 100%;
 }
 
-
-
 .login-card{
     border-radius: 15px;
     width: 400px;
@@ -39,11 +37,13 @@ html,body{
 .login-error p{
     color: red;
 }
+
 .login-input{
     display: flex;
     justify-content: center;
     margin: 40px;
 }
+
 .login-input input{
     font-size: 20px;
     padding-left: 10px;
@@ -53,6 +53,7 @@ html,body{
     border-width: 0 0 2px;
     border-color: rgb(167, 167, 167)
 }
+
 .login-input input:focus{
     border-color: blue
 
@@ -66,17 +67,19 @@ html,body{
     font-size: 20px;
     border-bottom: 2px solid var(--gray);
 }
+
 .login-remember{
     display: flex;
     justify-content: right;
     margin-top: -29px;
     margin-right: 50px;
 }
+
 .login-remember input{
     margin-right: 5px;
 }
+
 .login-loginbtn{
-    
   background-color: #0A66C2;
   border: 0;
   border-radius: 100px;
@@ -94,12 +97,13 @@ html,body{
   padding-left: 20px;
   padding-right: 20px;  
 }
+
 .login-loginbtn:focus, 
 .login-loginbtn:hover{
-
   background-color: #16437E;
   color: #ffffff;
 }
+
 .login-loginbtn-container{
     display: flex;
     justify-content: center;
