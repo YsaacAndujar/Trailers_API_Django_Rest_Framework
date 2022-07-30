@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="/static/css/trailers.css">
+{% endblock head %}
+
+{% block content %}
+
+<h1>Add a new trailer</h1>
+<hr class="hr-separator">
+<div class="add-trailer-top">
+    <div class="load-img-container">
+        <div class="img-container">
+            <img src="/static/images/medium-cover.jpg"name="imageUpload" id="imagePreview" alt="Image Preview">
+        </div>
+        <div clas="file_input_wrap">
+            <input type="file" name="imageUpload" id="imageUpload" class="hide" accept="image/*"/>
+            <label for="imageUpload" class="upload-btn">Select file</label>
+        </div>
+    </div>
+</div>
+{% endblock content %}

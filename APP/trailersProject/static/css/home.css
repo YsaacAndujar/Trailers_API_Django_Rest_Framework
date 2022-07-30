@@ -1,0 +1,8 @@
+.welcome-container{
+    opacity: 0.3;
+    vertical-align: middle;
+    text-align: center;
+}
+.welcome-container h1{
+    font-size: 100px;
+}

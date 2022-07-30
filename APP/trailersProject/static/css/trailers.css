@@ -1,0 +1,22 @@
+.add-trailer-top .load-img-container .img-container img{
+    width: 230px;
+    height: 345px;
+    margin: auto 0;
+    
+}
+
+.add-trailer-top{
+    display: flex;
+}
+
+
+
+.add-trailer-top .load-img-container .img-container {
+    width: 240px;
+    height: 355px;
+    display: flex;
+    vertical-align: middle;
+    justify-content: center;
+    border-radius: 2%;
+    background-color: var(--gray);
+}

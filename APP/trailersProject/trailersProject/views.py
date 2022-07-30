@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
 def home(request):
-    context = {}
+    user = request.user
+    context = {"name":user.username}
     return render(request,"index.html", context)

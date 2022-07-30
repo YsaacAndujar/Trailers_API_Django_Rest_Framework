@@ -6,30 +6,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
+    {% block head %}
+    {% endblock head %}
     <title>Trailers web</title>
 </head>
 <body>
     <header>
         <nav>
             <div class="logo-container">
-                <a href="#">
+                <a href="{% url 'home'  %}">
                     <img class="logo"src="{% static 'images/logo.png' %}" alt="logo">
                     <h1>Trailers Project</h1>
                 </a>
             </div>
             <ul class="nav-links">
                 <li>
-                    <a href="#">Trailers</a>
+                    <a href="#">Trailers <i class="fa-solid fa-caret-down"></i></a>
                     <ul>
-                        <li><a href="#">Add</a></li>
-                        <li><a href="#">View all</a></li>
+                        <a href="{% url 'Trailers:add' %}"><li>Add</li></a>
+                        <a href="#"><li>View all</li></a>
                     </ul>
                 </li>
                 <li>
-                    <a href="#">Categories</a>
+                    <a href="#">Categories <i class="fa-solid fa-caret-down"></i></a>
                     <ul>
-                        <li><a href="#">Add</a></li>
-                        <li><a href="#">View all</a></li>
+                        <a href="#"><li>Add</li></a>
+                        <a href="#"><li>View all</li></a>
                     </ul>
                 </li>
             </ul>
@@ -39,9 +42,10 @@
         </nav>
         
     </header>
-   
-    {% block content %}
-    {% endblock content %}
-
+   <div class="content-container">
+        {% block content %}
+        {% endblock content %}
+   </div>
+    <script src="https://kit.fontawesome.com/a85c6bd14f.js" crossorigin="anonymous"></script>
 </body>
 </html>

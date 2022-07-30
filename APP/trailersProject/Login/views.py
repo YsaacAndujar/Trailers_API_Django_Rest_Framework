@@ -16,7 +16,7 @@ def login(request):
             auth.login(request, user)
             if request.POST.get('rememberme', '') != 'on':
                 request.session.set_expiry(0)
-            return redirect("Home:home")
+            return redirect("home")
         else:
             context["message"]="Username or password are not correct"
             context["error"]=True
