@@ -8,3 +8,7 @@ def addTrailer(request):
 def addCategory(request):
     context = {}
     return render(request, "trailers/add-category.html",context)
+
+def viewTrailers(request):
+    context = {}
+    return render(request, "trailers/view-trailers.html",context)
