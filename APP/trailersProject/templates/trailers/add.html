@@ -2,21 +2,140 @@
 
 {% block head %}
 <link rel="stylesheet" href="/static/css/trailers.css">
+<link rel="stylesheet" href="/static/css/popup.css">
 {% endblock head %}
 
 {% block content %}
-
-<h1>Add a new trailer</h1>
-<hr class="hr-separator">
-<div class="add-trailer-top">
-    <div class="load-img-container">
-        <div class="img-container">
-            <img src="/static/images/medium-cover.jpg"name="imageUpload" id="imagePreview" alt="Image Preview">
+<form>{%csrf_token%}
+    <h1>Add a new trailer</h1>
+    <hr class="hr-separator">
+    <div class="add-trailer-top">
+        <div class="load-img-container">
+            <div class="img-container">
+                <img id="imagePreview" alt="Image Preview" class="hide">
+            </div>
+            <div clas="file_input_wrap">
+                <input type="file" name="imageUpload" id="imageUpload" class="hide" accept="image/*"/>
+                <label for="imageUpload" class="upload-btn">Select file</label>
+            </div>
         </div>
-        <div clas="file_input_wrap">
-            <input type="file" name="imageUpload" id="imageUpload" class="hide" accept="image/*"/>
-            <label for="imageUpload" class="upload-btn">Select file</label>
+        <div class="info-left-img">
+            <!--<h2>Trailer's YT code:</h2>
+            <input type="text">
+            <iframe width="100%" height="34%" src="https://www.youtube.com/embed/CWQfzF4iPQg" title="Pantera Greatest Hits Vol.  1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            --> 
+            <div class="input-container">
+                <div class="counter-flex">
+                    <h2>Title*</h2>
+                    <p id="title-p">(0/30)</p>
+                </div>
+                <input type="text" id="title-input">
+            </div>
+            <div class="input-container">
+                <h2>Release date</h2>
+                <input type="date">
+            </div>
+            <div class="textarea-container input-container">
+                <div class="counter-flex">
+                    <h2>Cast*</h2>
+                    <p>(0/50)</p>
+                </div>
+                <textarea></textarea>
+            </div>
+            <div class="textarea-container input-container">
+                <div class="counter-flex">
+                    <h2>Description*</h2>
+                    <p>(0/170)</p>
+                </div>
+                <textarea></textarea>
+            </div>
         </div>
     </div>
-</div>
+    <div class="add-trailer-bottom">
+        <div class="sts-container">
+            <h2>Category:</h2>
+            <div class="flex-around">
+                <div class="flex-center">
+                    <h4>Categories:</h4>
+                    <select name="cars" id="cars">
+                        <option value="volvo">Volvo</option>
+                        <option value="saab">Saab</option>
+                        <option value="mercedes">Mercedes</option>
+                        <option value="audi">Audi</option>
+                    </select>
+                    <input type="button" value="Add">
+                </div>
+                <div class="flex-center">
+                    <h4>Movie's categories</h4>
+                    <select name="cars" id="cars">
+                        <option value="volvo">Volvo</option>
+                        <option value="saab">Saab</option>
+                        <option value="mercedes">Mercedes</option>
+                        <option value="audi">Audi</option>
+                    </select>
+                    <input type="button" value="Remove">
+                </div>
+            </div>
+        </div>
+        <div class="add-trailer-url-container">
+            <h2>Movie's YT code trailer*</h2>
+            <input class="ytcode-input" type="text" id="code">
+            <div class="flex-around">
+                <iframe style="width:700px;height:400px;" id="frame"src=""  frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="container-end">
+            <button type="button"id="open-confirmation-popup" class="btn-save">Save</button>
+        </div>
+    </div>
+    <div class="popup" id="confirmation-popup">
+        <div class="overlay">
+            <div class="content">
+                <div class="container-center">
+                    <h2>Are you sure that you want to<br> add this trailer?</h2>
+                </div>
+                <div class="container-center">
+                    <button type="button" class="btn-danger" id="close-confirmation-popup">Cancel</button>
+                    <button type="submit" class="btn-save">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="popup ok" id="ok-popup">
+        <div class="overlay">
+            <div class="content">
+                <div class="container-center">
+                    <i class="fa-solid fa-check fa-beat" style="--fa-animation-duration: 2s;"></i>
+                </div>
+                <div class="container-center">
+                    <h2>Trailer added successfully</h2>
+                </div>
+                <div class="container-center">
+                    <button type="button"id="close-ok-popup" class="btn-save">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="popup error" id="error-popup">
+        <div class="overlay">
+            <div class="content">
+                <div class="container-center">
+                    <i class="fa-solid fa-triangle-exclamation fa-beat" style="--fa-animation-duration: 1s;"></i>
+                </div>
+                <div class="container-center">
+                    <h2>There was an error</h2>
+                </div>
+                    <p></p>
+
+                <div class="container-center">
+                    <button type="button"id="close-error-popup" class="btn-danger">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script src="/static/scripts/popup.js"></script>
+<script src="/static/scripts/count-char.js"></script>
+<script src="/static/scripts/img-preview.js"></script>
+<script src="/static/scripts/trailer-preview.js"></script>
 {% endblock content %}

@@ -9,7 +9,12 @@
     display: flex;
 }
 
-
+.add-trailer-top .load-img-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 
 .add-trailer-top .load-img-container .img-container {
     width: 240px;
@@ -19,4 +24,28 @@
     justify-content: center;
     border-radius: 2%;
     background-color: var(--gray);
+}
+
+.info-left-img{
+    width: 100%;
+    margin: 0px;
+    flex-grow: 1;
+}
+
+.add-trailer-bottom{
+    margin: 5px 20px;
+}
+
+.add-trailer-url-container{
+    margin: 20px 0;
+}
+
+.add-trailer-url-container h2{
+    margin: 0 0 20px;
+}
+
+.ytcode-input{
+    font-size: 18px;
+    height: 30px;
+    margin-bottom: 20px;
 }
