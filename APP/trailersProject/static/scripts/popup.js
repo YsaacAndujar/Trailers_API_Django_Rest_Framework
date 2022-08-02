@@ -1,6 +1,10 @@
 const closeConfirmation = document.getElementById("close-confirmation-popup");
 const openConfirmation = document.getElementById("open-confirmation-popup");
 const confirmation = document.getElementById("confirmation-popup");
+const save = document.getElementById("save-confirmation");
+save.addEventListener("click",()=>{
+    togglePopup(confirmation);
+});
 closeConfirmation.addEventListener("click",()=>{
     togglePopup(confirmation);
 });

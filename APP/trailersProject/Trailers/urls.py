@@ -3,5 +3,6 @@ from . import views
 app_name="Trailers"
 urlpatterns = [
     #path('admin/', admin.site.urls),
-    path('add/', views.add, name="add"),
+    path('addTrailer/', views.addTrailer, name="addTrailer"),
+    path('addCategory/', views.addCategory, name="addCategory"),
 ]

@@ -2,7 +2,6 @@
 
 {% block head %}
 <link rel="stylesheet" href="/static/css/trailers.css">
-<link rel="stylesheet" href="/static/css/popup.css">
 {% endblock head %}
 
 {% block content %}
@@ -27,9 +26,9 @@
             <div class="input-container">
                 <div class="counter-flex">
                     <h2>Title*</h2>
-                    <p id="title-p">(0/30)</p>
+                    <p id="title-p">(0/70)</p>
                 </div>
-                <input type="text" id="title-input">
+                <input type="text" id="title-input" required maxlength="70">
             </div>
             <div class="input-container">
                 <h2>Release date</h2>
@@ -38,16 +37,16 @@
             <div class="textarea-container input-container">
                 <div class="counter-flex">
                     <h2>Cast*</h2>
-                    <p>(0/50)</p>
+                    <p id="cast-p">(0/100)</p>
                 </div>
-                <textarea></textarea>
+                <textarea id="cast-input" required maxlength="100"></textarea>
             </div>
             <div class="textarea-container input-container">
                 <div class="counter-flex">
                     <h2>Description*</h2>
-                    <p>(0/170)</p>
+                    <p id="description-p">(0/200)</p>
                 </div>
-                <textarea></textarea>
+                <textarea id="description-input" required maxlength="200"></textarea>
             </div>
         </div>
     </div>
@@ -57,29 +56,28 @@
             <div class="flex-around">
                 <div class="flex-center">
                     <h4>Categories:</h4>
-                    <select name="cars" id="cars">
+                    <select name="cars" id="from-sts">
                         <option value="volvo">Volvo</option>
                         <option value="saab">Saab</option>
                         <option value="mercedes">Mercedes</option>
                         <option value="audi">Audi</option>
                     </select>
-                    <input type="button" value="Add">
+                    <input type="button" value="Add" id="add-sts">
                 </div>
                 <div class="flex-center">
                     <h4>Movie's categories</h4>
-                    <select name="cars" id="cars">
-                        <option value="volvo">Volvo</option>
-                        <option value="saab">Saab</option>
-                        <option value="mercedes">Mercedes</option>
-                        <option value="audi">Audi</option>
+                    <select name="cars" id="to-sts">
                     </select>
-                    <input type="button" value="Remove">
+                    <input type="button" value="Remove" id="remove-sts">
                 </div>
             </div>
         </div>
         <div class="add-trailer-url-container">
-            <h2>Movie's YT code trailer*</h2>
-            <input class="ytcode-input" type="text" id="code">
+            <div class="counter-flex">
+                <h2>Movie's YT code trailer*</h2>
+                <p id="code-p">(0/15)</p>
+            </div>
+            <input class="ytcode-input" type="text" id="code" required maxlength="15">
             <div class="flex-around">
                 <iframe style="width:700px;height:400px;" id="frame"src=""  frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
@@ -96,7 +94,7 @@
                 </div>
                 <div class="container-center">
                     <button type="button" class="btn-danger" id="close-confirmation-popup">Cancel</button>
-                    <button type="submit" class="btn-save">Save</button>
+                    <button type="submit" class="btn-save" id="save-confirmation">Save</button>
                 </div>
             </div>
         </div>
@@ -138,4 +136,5 @@
 <script src="/static/scripts/count-char.js"></script>
 <script src="/static/scripts/img-preview.js"></script>
 <script src="/static/scripts/trailer-preview.js"></script>
+<script src="/static/scripts/sts.js"></script>
 {% endblock content %}

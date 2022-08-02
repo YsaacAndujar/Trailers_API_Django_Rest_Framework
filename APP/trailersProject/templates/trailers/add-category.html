@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="/static/css/trailers.css">
+{% endblock head %}
+
+{% block content %}
+<form>{%csrf_token%}
+    <h1>Add a new category</h1>
+    <hr class="hr-separator">
+    <div class="add-category-container">
+        <div class="input-container">
+            <div class="counter-flex">
+                <h2>Name*</h2>
+                <p id="category-name-p">(0/50)</p>
+                <input type="text" id="category-name-input" required maxlength="50">
+            </div>
+        </div>
+        <br>
+        <div class="container-end">
+            <button type="button"id="open-confirmation-popup" class="btn-save">Save</button>
+        </div>
+    </div>
+    
+        
+    <div class="popup" id="confirmation-popup">
+        <div class="overlay">
+            <div class="content">
+                <div class="container-center">
+                    <h2>Are you sure that you want to<br> add this category?</h2>
+                </div>
+                <div class="container-center">
+                    <button type="button" class="btn-danger" id="close-confirmation-popup">Cancel</button>
+                    <button type="submit" class="btn-save" id="save-confirmation">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="popup ok" id="ok-popup">
+        <div class="overlay">
+            <div class="content">
+                <div class="container-center">
+                    <i class="fa-solid fa-check fa-beat" style="--fa-animation-duration: 2s;"></i>
+                </div>
+                <div class="container-center">
+                    <h2>Category added successfully</h2>
+                </div>
+                <div class="container-center">
+                    <button type="button"id="close-ok-popup" class="btn-save">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="popup error" id="error-popup">
+        <div class="overlay">
+            <div class="content">
+                <div class="container-center">
+                    <i class="fa-solid fa-triangle-exclamation fa-beat" style="--fa-animation-duration: 1s;"></i>
+                </div>
+                <div class="container-center">
+                    <h2>There was an error</h2>
+                </div>
+                    <p></p>
+
+                <div class="container-center">
+                    <button type="button"id="close-error-popup" class="btn-danger">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script src="/static/scripts/popup.js"></script>
+<script src="/static/scripts/count-char.js"></script>
+<script src="/static/scripts/img-preview.js"></script>
+{% endblock content %}

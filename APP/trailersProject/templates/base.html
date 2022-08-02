@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/popup.css' %}">
     <link rel="stylesheet" href="{% static 'css/navbar.css' %}">
     {% block head %}
     {% endblock head %}
@@ -24,14 +25,14 @@
                 <li>
                     <a href="#">Trailers <i class="fa-solid fa-caret-down"></i></a>
                     <ul>
-                        <a href="{% url 'Trailers:add' %}"><li>Add</li></a>
+                        <a href="{% url 'Trailers:addTrailer' %}"><li>Add</li></a>
                         <a href="#"><li>View all</li></a>
                     </ul>
                 </li>
                 <li>
                     <a href="#">Categories <i class="fa-solid fa-caret-down"></i></a>
                     <ul>
-                        <a href="#"><li>Add</li></a>
+                        <a href="{% url 'Trailers:addCategory' %}"><li>Add</li></a>
                         <a href="#"><li>View all</li></a>
                     </ul>
                 </li>
