@@ -27,5 +27,9 @@ class CategoryForm(ModelForm):
 class TrailersForm(ModelForm):
     class Meta:
         model = Trailers
-        fields = ["title",]
-        
+        fields = "__all__"
+        widgets = {
+            'title': TextInput(attrs={
+				        'id':'title-input',
+                    }),
+        } 
