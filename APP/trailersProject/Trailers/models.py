@@ -1,4 +1,6 @@
+from dataclasses import field, fields
 from django.db import models
+from django.forms import ModelForm, TextInput
 
 class Category(models.Model):
     name=models.TextField(max_length=50, unique=True)
@@ -12,3 +14,18 @@ class Trailers(models.Model):
     trailerUrl=models.TextField(max_length=15),
     category=models.ForeignKey(Category, null=True,on_delete=models.CASCADE)
 
+class CategoryForm(ModelForm):
+    class Meta:
+        model = Category
+        fields = ["name"]
+        widgets = {
+            'name': TextInput(attrs={
+				        'id':'category-name-input',
+                    }),
+        }
+
+class TrailersForm(ModelForm):
+    class Meta:
+        model = Trailers
+        fields = ["title",]
+        

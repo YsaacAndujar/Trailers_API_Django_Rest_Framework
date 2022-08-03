@@ -5,7 +5,7 @@
 {% endblock head %}
 
 {% block content %}
-<h1>view all trailers</h1>
+<h1>view all categories</h1>
 <hr class="hr-separator">
 <div class="view-content">
     <div class="search-container">
@@ -14,14 +14,17 @@
         <table class="table">
             <tr>
                 <th>ID</th>
-                <th>Title</th>
+                <th>Name</th>
                 <th></th>
             </tr>
-            <tr>
-            <td>1</td>
-            <td></td>
-            <td><a href="#x">Modify/Delete</a></td>
-            </tr>
+            {% for category in categories %}
+                <tr>
+                    <td>{{category.id}}</td>
+                    <td>{{category.name}}</td>
+                    <td><a href="{% url 'Trailers:modifyCategory' category.id %}">Modify/Delete</a></td>
+                </tr>
+            {% endfor %}
+            
         </table>
     </div>
 </div>

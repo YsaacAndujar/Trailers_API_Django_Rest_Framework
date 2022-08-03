@@ -6,7 +6,7 @@
 
 {% block content %}
 <form method="POST">{%csrf_token%}
-    <h1>Add a new category</h1>
+    <h1>Modify category</h1>
     <hr class="hr-separator">
     <div class="add-category-container">
         <div class="input-container">
@@ -29,7 +29,7 @@
         <div class="overlay">
             <div class="content">
                 <div class="container-center">
-                    <h2>Are you sure that you want to add this category?</h2>
+                    <h2>Are you sure that you want to modify this category?</h2>
                 </div>
                 <div class="container-center">
                     <button type="button" class="btn-danger" id="close-confirmation-popup">Cancel</button>
@@ -51,7 +51,7 @@
                     <i class="fa-solid fa-check fa-beat" style="--fa-animation-duration: 2s;"></i>
                 </div>
                 <div class="container-center">
-                    <h2>Category added successfully</h2>
+                    <h2>Category modified successfully</h2>
                 </div>
                 <div class="container-center">
                     <button type="button"id="close-ok-popup" class="btn-save">Ok</button>
