@@ -3,22 +3,6 @@ from .models import *
 # Create your views here.
 def addTrailer(request):
     context = {}
-    if request.method == "POST":
-        form = TrailersForm(request.POST)
-        if form.is_valid():
-            try:
-                form.save()
-                context["valid"] = True
-                context["form"] = TrailersForm()
-            except:
-                context["error"]=True
-                context["errorMessage"]="Try again or try again later"
-        else:
-            context["form"]=form
-            context["error"]=True
-            context["errorMessage"]="The form is not valid"
-    else:
-        context["form"] = TrailersForm()
     return render(request, "trailers/add-trailer.html",context)
 
 def addCategory(request):
