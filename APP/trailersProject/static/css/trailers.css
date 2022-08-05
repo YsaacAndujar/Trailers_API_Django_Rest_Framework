@@ -40,6 +40,9 @@
     margin: 20px 0;
 }
 
+.add-trailer-url-container > p{
+    margin-top: -20px;
+}
 .add-trailer-url-container h2{
     margin: 0 0 20px;
 }
@@ -49,3 +52,22 @@
     height: 30px;
     margin-bottom: 20px;
 }
+
+.category-container {
+    width: 100%;
+    height: 110px;
+    overflow: scroll;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 5px;
+    justify-content: space-around;
+}
+
+.category-container .label-container{
+    padding: 5px;
+}
+.category-container .label-container label{
+    font-size: 18px;
+    display: flex;
+    align-items: center;  
+}     

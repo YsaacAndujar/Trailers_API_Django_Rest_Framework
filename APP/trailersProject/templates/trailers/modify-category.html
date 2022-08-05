@@ -5,7 +5,7 @@
 {% endblock head %}
 
 {% block content %}
-<form method="POST">{%csrf_token%}
+<form method="POST" onkeydown="return event.key != 'Enter';">{%csrf_token%}
     <h1>Modify category</h1>
     <hr class="hr-separator">
     <div class="add-category-container">

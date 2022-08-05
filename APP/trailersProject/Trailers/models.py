@@ -1,18 +1,21 @@
-from dataclasses import field, fields
+import this
+from django import forms
 from django.db import models
-from django.forms import ModelForm, TextInput
+from django.forms import CheckboxSelectMultiple, DateInput, FileInput, ModelForm, ModelMultipleChoiceField, TextInput, Textarea
 
 class Category(models.Model):
     name=models.TextField(max_length=50, unique=True)
+    def __str__(self):
+         return self.name
 
 class Trailers(models.Model):
-    title = models.TextField(max_length=70),
-    release_date = models.DateField(null=True),
-    description=models.TextField(max_length=200),
-    cast=models.TextField(max_length=100),
-    image =models.ImageField(upload_to='media'),
-    trailerUrl=models.TextField(max_length=15),
-    category=models.ForeignKey(Category, null=True,on_delete=models.CASCADE)
+    title = models.TextField(max_length=70, verbose_name="Title")
+    release_date = models.DateField(null=True, blank=True)
+    description=models.TextField(max_length=200)
+    cast=models.TextField(max_length=100)
+    image =models.ImageField(upload_to='images', blank=True )
+    trailerUrl=models.TextField(max_length=15)
+    category = models.ManyToManyField(Category, blank=True)
 
 class CategoryForm(ModelForm):
     class Meta:
@@ -24,5 +27,53 @@ class CategoryForm(ModelForm):
                     }),
         }
 
+class CustomMMCF(forms.ModelMultipleChoiceField):
+    def label_from_instance(self, category):
+        return "%s" % category.name
+        
+class TrailersForm(ModelForm):
+    class Meta:
+        model = Trailers
+        fields = "__all__"
+        widgets = {
+            'title': TextInput(
+                attrs={
+                    'id':'title-input',
+                }
+            ),
+            'release_date': DateInput(
+                format=('%m-%d-%Y'),
+                attrs={
+                    'type': 'date'
+                },
+            ),
+            'cast': Textarea(
+                attrs={
+                    'id':'cast-input'
+                }
+            ),
+            'description': Textarea(
+                attrs={
+                    'id':'description-input'
+                }
+            ),
+            'trailerUrl': TextInput(
+                attrs={
+                    'id':'code',
+                    'class':'ytcode-input'                    
+                }
+            ),
+            'image': FileInput(
+                attrs={
+                    'id':'imageUpload',
+                    'name':'imageUpload',
+                    'class':'hide',
+                }
+            ),
+            'category': CheckboxSelectMultiple(
+                attrs={
+                }
+            )
+        }     
 
         

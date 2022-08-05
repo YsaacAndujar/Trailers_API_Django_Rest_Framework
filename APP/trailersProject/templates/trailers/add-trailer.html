@@ -5,7 +5,7 @@
 {% endblock head %}
 
 {% block content %}
-<form>{%csrf_token%}
+<form method="POST" enctype="multipart/form-data" onkeydown="return event.key != 'Enter';">{%csrf_token%}
     <h1>Add a new trailer</h1>
     <hr class="hr-separator">
     <div class="add-trailer-top">
@@ -13,8 +13,9 @@
             <div class="img-container">
                 <img id="imagePreview" alt="Image Preview" class="hide">
             </div>
+            <p class="danger">{{imageError}}{{form.image.errors.as_text}}</p>
             <div clas="file_input_wrap">
-                <input type="file" name="imageUpload" id="imageUpload" class="hide" accept="image/*"/>
+                {{form.image}}
                 <label for="imageUpload" class="upload-btn">Select file</label>
             </div>
         </div>
@@ -24,57 +25,75 @@
                     <h2>Title*</h2>
                     <p id="title-p">(0/70)</p>
                 </div>
-                <p>d</p>
+                <p class="danger">{{form.title.errors.as_text}}</p>
                 {{form.title}}
             </div>
             <div class="input-container">
                 <h2>Release date</h2>
-                <input type="date">
+                <p class="danger">{{form.release_date.errors.as_text}}</p>
+                {{form.release_date}}
             </div>
             <div class="textarea-container input-container">
                 <div class="counter-flex">
                     <h2>Cast*</h2>
                     <p id="cast-p">(0/100)</p>
                 </div>
-                <textarea id="cast-input" required maxlength="100"></textarea>
+                <p class="danger">{{form.cast.errors.as_text}}</p>
+                {{form.cast}}
             </div>
             <div class="textarea-container input-container">
                 <div class="counter-flex">
                     <h2>Description*</h2>
                     <p id="description-p">(0/200)</p>
                 </div>
-                <textarea id="description-input" required maxlength="200"></textarea>
+                <p class="danger">{{form.description.errors.as_text}}</p>
+                {{form.description}}
             </div>
         </div>
+        
     </div>
     <div class="add-trailer-bottom">
+    <h2>Categories</h2>
+    <div class="category-container">
+        {% for checkbox in form.category %}
+        <div class="label-container">
+            <label>
+                {{ checkbox.tag }}{{ checkbox.choice_label }}
+            </label>
+        </div>
+            
+        {% endfor %}
+    </div>
+    </div>
+    <!--
         <div class="sts-container">
             <h2>Category:</h2>
             <div class="flex-around">
                 <div class="flex-center">
                     <h4>Categories:</h4>
-                    <select name="cars" id="from-sts">
-                        <option value="volvo">Volvo</option>
-                        <option value="saab">Saab</option>
-                        <option value="mercedes">Mercedes</option>
-                        <option value="audi">Audi</option>
+                    <select name="from-categories" id="from-sts">
+                        {% for category in fromCategories %}
+                        <option value="{{category.id}}">{{category.name}}</option>
+                        {% endfor %}
                     </select>
                     <input type="button" value="Add" id="add-sts">
                 </div>
                 <div class="flex-center">
                     <h4>Movie's categories</h4>
-                    <select name="cars" id="to-sts">
+                    <select name="from-categories" id="to-sts">
                     </select>
                     <input type="button" value="Remove" id="remove-sts">
                 </div>
             </div>
-        </div>
+        </div>-->
+        
         <div class="add-trailer-url-container">
             <div class="counter-flex">
                 <h2>Movie's YT code trailer*</h2>
                 <p id="code-p">(0/15)</p>
             </div>
-            <input class="ytcode-input" type="text" id="code" required maxlength="15">
+            <p class="danger">{{form.trailerUrl.errors.as_text}}</p>
+            {{form.trailerUrl}}
             <div class="flex-around">
                 <iframe style="width:700px;height:400px;" id="frame"src=""  frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
@@ -96,7 +115,13 @@
             </div>
         </div>
     </div>
-    <div class="popup ok" id="ok-popup">
+    <div 
+        {% if valid %}
+            class="popup ok active"
+        {% else %}
+            class="popup ok"
+        {% endif %}
+        id="ok-popup">
         <div class="overlay">
             <div class="content">
                 <div class="container-center">
@@ -111,7 +136,13 @@
             </div>
         </div>
     </div>
-    <div class="popup error" id="error-popup">
+    <div 
+        {% if error %}
+            class="popup error active"
+        {% else %}
+            class="popup error"
+        {% endif %}
+     id="error-popup">
         <div class="overlay">
             <div class="content">
                 <div class="container-center">
@@ -120,8 +151,7 @@
                 <div class="container-center">
                     <h2>There was an error</h2>
                 </div>
-                    <p></p>
-
+                    <p>{{errorMessage}}</p>
                 <div class="container-center">
                     <button type="button"id="close-error-popup" class="btn-danger">Ok</button>
                 </div>
@@ -134,5 +164,5 @@
 <script src="/static/scripts/img-preview.js"></script>
 <script src="/static/scripts/trailer-preview.js"></script>
 <script src="/static/scripts/add-trailer-count-char.js"></script>
-<script src="/static/scripts/sts.js"></script>
+<!--<script src="/static/scripts/sts.js"></script>-->
 {% endblock content %}

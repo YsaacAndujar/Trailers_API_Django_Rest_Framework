@@ -37,7 +37,7 @@
     color: var(--green);
 }
 
-.popup.error i{
+.popup.error i, .popup.delete i{
     color: red;
     margin-bottom: 10px;
 }

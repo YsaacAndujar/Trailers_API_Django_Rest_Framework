@@ -5,3 +5,4 @@ categoryNameInput.addEventListener("input", (e)=>{
     let are = e.target.value.length;
     countChar(categoryNameP, max, are);
 });
+countChar(categoryNameP, 50, categoryNameInput.value.length);

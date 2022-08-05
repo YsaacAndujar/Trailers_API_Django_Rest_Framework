@@ -1,0 +1,192 @@
+{% extends "base.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="/static/css/trailers.css">
+{% endblock head %}
+
+{% block content %}
+<form method="POST" enctype="multipart/form-data" onkeydown="return event.key != 'Enter';">{%csrf_token%}
+    <h1>Add a new trailer</h1>
+    <hr class="hr-separator">
+    <div class="add-trailer-top">
+        <div class="load-img-container">
+            <div class="img-container">
+                <img id="imagePreview" alt="Image Preview" src="{{trailer.image.url}}">
+            </div>
+            <p class="danger">{{imageError}}{{form.image.errors.as_text}}</p>
+            <div clas="file_input_wrap">
+                {{form.image}}
+                <label for="imageUpload" class="upload-btn">Select file</label>
+            </div>
+        </div>
+        <div class="info-left-img">
+            <div class="input-container">
+                <div class="counter-flex">
+                    <h2>Title*</h2>
+                    <p id="title-p">(0/70)</p>
+                </div>
+                <p class="danger">{{form.title.errors.as_text}}</p>
+                {{form.title}}
+            </div>
+            <div class="input-container">
+                <h2>Release date</h2>
+                <p class="danger">{{form.release_date.errors.as_text}}</p>
+                {{form.release_date}}
+            </div>
+            <div class="textarea-container input-container">
+                <div class="counter-flex">
+                    <h2>Cast*</h2>
+                    <p id="cast-p">(0/100)</p>
+                </div>
+                <p class="danger">{{form.cast.errors.as_text}}</p>
+                {{form.cast}}
+            </div>
+            <div class="textarea-container input-container">
+                <div class="counter-flex">
+                    <h2>Description*</h2>
+                    <p id="description-p">(0/200)</p>
+                </div>
+                <p class="danger">{{form.description.errors.as_text}}</p>
+                {{form.description}}
+            </div>
+        </div>
+        
+    </div>
+    <div class="add-trailer-bottom">
+    <h2>Categories</h2>
+    <div class="category-container">
+        {% for checkbox in form.category %}
+        <div class="label-container">
+            <label>
+                {{ checkbox.tag }}{{ checkbox.choice_label }}
+            </label>
+        </div>
+            
+        {% endfor %}
+    </div>
+    </div>
+    <!--
+        <div class="sts-container">
+            <h2>Category:</h2>
+            <div class="flex-around">
+                <div class="flex-center">
+                    <h4>Categories:</h4>
+                    <select name="from-categories" id="from-sts">
+                        {% for category in fromCategories %}
+                        <option value="{{category.id}}">{{category.name}}</option>
+                        {% endfor %}
+                    </select>
+                    <input type="button" value="Add" id="add-sts">
+                </div>
+                <div class="flex-center">
+                    <h4>Movie's categories</h4>
+                    <select name="from-categories" id="to-sts">
+                    </select>
+                    <input type="button" value="Remove" id="remove-sts">
+                </div>
+            </div>
+        </div>-->
+        
+        <div class="add-trailer-url-container">
+            <div class="counter-flex">
+                <h2>Movie's YT code trailer*</h2>
+                <p id="code-p">(0/15)</p>
+            </div>
+            <p class="danger">{{form.trailerUrl.errors.as_text}}</p>
+            {{form.trailerUrl}}
+            <div class="flex-around">
+                <iframe style="width:700px;height:400px;" id="frame"src=""  frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+        </div>
+        <div class="container-end">
+            <button type="button"id="open-delete-popup" class="btn-danger">Delete</button>
+            <button type="button"id="open-confirmation-popup" class="btn-save">Save</button>
+        </div>
+    </div>
+    <div class="popup delete" id="delete-popup">
+        <div class="overlay">
+            <div class="content">
+            <div class="container-center">
+                    <i class="fa-solid fa-triangle-exclamation fa-beat" style="--fa-animation-duration: 1s;"></i>
+                </div>
+                <div class="container-center">
+                    <h2>Are you sure that you want to delete this trailer?</h2>
+                </div>
+                <div class="container-center">
+                    <button type="button" class="btn-save" id="close-delete-popup">Cancel</button>
+                    <button type="button" class="btn-danger" id="submit-delete-popup">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="popup" id="confirmation-popup">
+        <div class="overlay">
+            <div class="content">
+                <div class="container-center">
+                    <h2>Are you sure that you want to Modify this trailer?</h2>
+                </div>
+                <div class="container-center">
+                    <button type="button" class="btn-danger" id="close-confirmation-popup">Cancel</button>
+                    <button type="submit" class="btn-save" id="save-confirmation">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div 
+        {% if valid %}
+            class="popup ok active"
+        {% else %}
+            class="popup ok"
+        {% endif %}
+        id="ok-popup">
+        <div class="overlay">
+            <div class="content">
+                <div class="container-center">
+                    <i class="fa-solid fa-check fa-beat" style="--fa-animation-duration: 2s;"></i>
+                </div>
+                <div class="container-center">
+                    <h2>Trailer modified successfully</h2>
+                </div>
+                <div class="container-center">
+                    <button type="button"id="close-ok-popup" class="btn-save">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div 
+        {% if error %}
+            class="popup error active"
+        {% else %}
+            class="popup error"
+        {% endif %}
+     id="error-popup">
+        <div class="overlay">
+            <div class="content">
+                <div class="container-center">
+                    <i class="fa-solid fa-triangle-exclamation fa-beat" style="--fa-animation-duration: 1s;"></i>
+                </div>
+                <div class="container-center">
+                    <h2>There was an error</h2>
+                </div>
+                    <p>{{errorMessage}}</p>
+                <div class="container-center">
+                    <button type="button"id="close-error-popup" class="btn-danger">Ok</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+<script src="/static/scripts/popup.js"></script>
+<script src="/static/scripts/count-char.js"></script>
+<script src="/static/scripts/img-preview.js"></script>
+<script src="/static/scripts/trailer-preview.js"></script>
+<script src="/static/scripts/add-trailer-count-char.js"></script>
+
+<script>
+const deleteBtn = document.getElementById("submit-delete-popup");
+deleteBtn.addEventListener("click",()=>{
+    location.href="{% url 'Trailers:deleteTrailer' trailer.id %}";
+});
+</script>
+<!--<script src="/static/scripts/sts.js"></script>-->
+{% endblock content %}

@@ -15,13 +15,18 @@
             <tr>
                 <th>ID</th>
                 <th>Title</th>
+                <th>Release</th>
                 <th></th>
             </tr>
+            {% for trailer in trailers %}
             <tr>
-            <td>1</td>
-            <td></td>
-            <td><a href="#x">Modify/Delete</a></td>
+                <td>{{trailer.id}}</td>
+                <td>{{trailer.title}}</td>
+                <td>{{trailer.release_date}}</td>
+                <td><a href="{% url 'Trailers:modifyTrailer' trailer.id %}">Modify/Delete</a></td>
             </tr>
+            {% endfor %}
+            
         </table>
     </div>
 </div>

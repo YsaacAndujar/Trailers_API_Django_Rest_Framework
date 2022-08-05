@@ -1,8 +1,38 @@
 from django.shortcuts import redirect, render
-from .models import *
+from django.urls import reverse
+from .models import CategoryForm, TrailersForm, Category, Trailers
 # Create your views here.
 def addTrailer(request):
     context = {}
+    if request.method == "POST":
+        form = TrailersForm(request.POST, request.FILES)
+        if form.is_valid():
+            try:
+                if form.cleaned_data.get('image') is None:
+                    context["error"]=True
+                    context["errorMessage"]="The form is not valid"
+                    context["imageError"] = "*Image file is required\n"
+                    context["form"]=form
+                    return render(request, "trailers/add-trailer.html",context)
+                form.save()
+                context["valid"] = True
+                #context["form"] = TrailersForm()
+                return redirect(reverse('Trailers:addTrailer') + '?valid=True')
+            except Exception as e:
+                context["error"]=True
+                context["errorMessage"]=e
+                context["form"]=form
+        else:
+            context["form"]=form
+            context["error"]=True
+            context["errorMessage"]="The form is not valid"
+    else:
+        context["form"] = TrailersForm()
+    try:
+        if request.GET["valid"]:
+            context["valid"]=True
+    except Exception as e:
+        pass
     return render(request, "trailers/add-trailer.html",context)
 
 def addCategory(request):
@@ -13,21 +43,29 @@ def addCategory(request):
         if form.is_valid():
             try:
                 form.save()
-                context["valid"] = True
-                context["form"] = CategoryForm()
-            except:
+                return redirect(reverse('Trailers:addCategory') + '?valid=True')
+            except Exception as e:
+                context["form"]=form
                 context["error"]=True
-                context["errorMessage"]="Try again or try again later"
+                context["errorMessage"]=e
         else:
             context["form"]=form
             context["error"]=True
             context["errorMessage"]="The form is not valid"
     else:
         context["form"] = CategoryForm()
+    try:
+        if request.GET["valid"]:
+            context["valid"]=True
+    except Exception as e:
+        pass
     return render(request, "trailers/add-category.html",context)
 
 def viewTrailers(request):
-    context = {}
+    trailers = Trailers.objects.all()
+    context = {
+        "trailers":trailers
+    }
     return render(request, "trailers/view-trailers.html",context)
 
 def viewCategories(request):
@@ -50,9 +88,10 @@ def modifyCategory(request, pk):
                 form.save()
                 context["valid"] = True
                 context["form"] = form
-            except:
+            except Exception as e:
+                context["form"]=form
                 context["error"]=True
-                context["errorMessage"]="Try again or try again later"
+                context["errorMessage"]=e
         else:
             context["form"]=form
             context["error"]=True
@@ -61,3 +100,45 @@ def modifyCategory(request, pk):
         form = CategoryForm(instance=category)
         context["form"] = form
     return render(request,"trailers/modify-category.html",context)
+
+def modifyTrailer(request, pk):
+    try:
+        trailer = Trailers.objects.get(id=pk)
+    except Trailers.DoesNotExist:
+        return redirect("Trailers:viewTrailers")
+    context = {
+        "trailer":trailer
+    }
+    if request.method == "POST":
+        form = TrailersForm(request.POST, request.FILES, instance=trailer)
+        context["form"]=form
+        if form.is_valid():
+            try:        
+                trailer2 = form.save(commit=False)
+                img = request.FILES.get("image")
+                if img is not None:
+                    trailer2.image=img
+                else:
+                    trailer2.image = trailer.image
+                trailer2.save()
+                context["form"]=TrailersForm(instance=trailer2)
+                context["trailer"]=trailer2
+                context["valid"] = True
+            except Exception as e:
+                context["error"]=True
+                context["errorMessage"]=e
+        else:
+            context["error"]=True
+            context["errorMessage"]="The form is not valid"
+    else:
+        form = TrailersForm(instance=trailer)
+        context["form"]=form
+    return render(request, "trailers/modify-trailer.html",context)
+
+def deleteTrailer(request, pk):
+    try:
+        trailer = Trailers.objects.get(id=pk)
+    except Trailers.DoesNotExist:
+        return redirect("Trailers:viewTrailers")
+    trailer.delete()
+    return redirect("Trailers:viewTrailers")

@@ -90,34 +90,6 @@ body{
     align-items: center;
 }
 
-.sts-container h2{
-    margin-bottom: 15px;
-}
-
-.sts-container select{
-    width: 100px;
-}
-
-.sts-container select, .sts-container input{
-    margin: 10px;
-    font-size: 18px;
-    height: 30px;
-    width: 300px;
-}
-
-.sts-container input{
-    color: white;
-    cursor: pointer;
-    background-color: var(--gray);
-    transition: var(--transition);
-    border-radius: 4px;
-    border: 0px;
-}
-
-.sts-container input:hover{
-    color: var(--blue);
-}
-
 .danger{
     color: red;
 }
