@@ -1,0 +1,25 @@
+.search-container{
+    margin-bottom: 20px;
+}
+.all-params-container{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+}
+
+.all-params-container .param-container{
+    margin: 10px;
+}
+
+.all-params-container .param-container{
+    margin-top: 5px;
+    width: 200px;
+}
+
+.param-container input, .param-container select{
+    width: 100%;
+    font-size: 16px;
+    margin-top: 5px;
+    height: 25px;
+}

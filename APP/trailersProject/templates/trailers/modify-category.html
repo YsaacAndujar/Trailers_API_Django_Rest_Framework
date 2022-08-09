@@ -20,6 +20,7 @@
         </div>
         <br>
         <div class="container-end">
+            <button type="button"id="open-delete-popup" class="btn-danger">Delete</button>
             <button type="button"id="open-confirmation-popup" class="btn-save">Save</button>
         </div>
     </div>
@@ -81,7 +82,29 @@
             </div>
         </div>
     </div>
+    <div class="popup delete" id="delete-popup">
+        <div class="overlay">
+            <div class="content">
+            <div class="container-center">
+                    <i class="fa-solid fa-triangle-exclamation fa-beat" style="--fa-animation-duration: 1s;"></i>
+                </div>
+                <div class="container-center">
+                    <h2>Are you sure that you want to delete this trailer?</h2>
+                </div>
+                <div class="container-center">
+                    <button type="button" class="btn-save" id="close-delete-popup">Cancel</button>
+                    <button type="button" class="btn-danger" id="submit-delete-popup">Delete</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </form>
+<script>
+const deleteBtn = document.getElementById("submit-delete-popup");
+deleteBtn.addEventListener("click",()=>{
+    location.href="{% url 'Trailers:deleteCategory' category.id %}";
+});
+</script>
 <script src="/static/scripts/popup.js"></script>
 <script src="/static/scripts/count-char.js"></script>
 <script src="/static/scripts/add-category-count-char.js"></script>
