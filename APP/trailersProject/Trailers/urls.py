@@ -9,6 +9,7 @@ urlpatterns = [
     path('modify-trailer/<int:pk>', views.modifyTrailer, name="modifyTrailer"),
     path('delete-trailer/<int:pk>', views.deleteTrailer, name="deleteTrailer"),
     path('add-category/', views.addCategory, name="addCategory"),
+    path('delete-category/<int:pk>', views.deleteCategory, name="deleteCategory"),
     path('modify-category/<int:pk>', views.modifyCategory, name="modifyCategory"),
     path('view-categories/', views.viewCategories, name="viewCategories"),
 ]

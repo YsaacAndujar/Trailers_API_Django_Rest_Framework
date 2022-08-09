@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% block head %}
+<link rel="stylesheet" href="/static/css/search.css">
 <link rel="stylesheet" href="/static/css/table.css">
 {% endblock head %}
 
@@ -9,6 +10,20 @@
 <hr class="hr-separator">
 <div class="view-content">
     <div class="search-container">
+        <div class="all-params-container">
+            <div class="param-container">
+                    <h4>ID:</h4>
+                    <input type="text" id="id-input" value="{{id}}">
+            </div>
+            <div class="param-container">
+                    <h4>Name:</h4>
+                    <input type="text" id="name-input" value="{{name}}">
+            </div>
+
+        </div>
+        <div class="container-center">
+            <button type="button" class="btn-save" id="searchBtn">Search</button>
+        </div>
     </div>
     <div class="table-container">
         <table class="table">
@@ -27,5 +42,38 @@
             
         </table>
     </div>
+    <br>
+    <span >
+        {% if categories.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ categories.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ categories.number }} of {{ categories.paginator.num_pages }}.
+        </span>
+
+        {% if categories.has_next %}
+            <a href="?page={{ categories.next_page_number }}">next</a>
+            <a href="?page={{ categories.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
 </div>
+<script>
+const searchBtn = document.getElementById("searchBtn");
+const idInput = document.getElementById("id-input");
+const nameInput=document.getElementById("name-input");
+searchBtn.addEventListener("click",()=>{
+    let url = "{% url 'Trailers:viewCategories' %}?"
+    if (idInput.value.trim() != ""){
+        url = url+"id="+idInput.value.trim()+"&";
+    }
+    if (nameInput.value.trim() != ""){
+        url = url+"name="+nameInput.value.trim();
+    }
+
+
+    location.href = url;
+});
+</script>
 {% endblock content %}

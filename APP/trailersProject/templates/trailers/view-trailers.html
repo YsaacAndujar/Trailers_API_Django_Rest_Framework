@@ -2,6 +2,7 @@
 
 {% block head %}
 <link rel="stylesheet" href="/static/css/table.css">
+<link rel="stylesheet" href="/static/css/search.css">
 {% endblock head %}
 
 {% block content %}
@@ -9,6 +10,39 @@
 <hr class="hr-separator">
 <div class="view-content">
     <div class="search-container">
+        <div class="all-params-container">
+            <div class="param-container">
+                    <h4>ID:</h4>
+                    <input type="text" id="id-input" value="{{id}}">
+            </div>
+            <div class="param-container">
+                    <h4>Title:</h4>
+                    <input type="text" id="title-input" value="{{title}}">
+            </div>
+            <div class="param-container">
+                    <h4>From:</h4>
+                    <input type="date" id="from-input" value="{{from}}">
+            </div>
+            <div class="param-container">
+                    <h4>To:</h4>
+                    <input type="date" id="to-input" value="{{to}}">
+            </div>
+            <div class="param-container">
+                    <h4>Category:</h4>
+                    <select id="category-input">
+                        <option value="no">---------------------</option>
+                        {% for category2 in categories %}
+                            <option value="{{category2.id}}"
+                            {% if category|stringformat:'s' == category2.id|stringformat:'s' %}
+                            selected
+                            {% endif %}>{{category2.name}}</option>
+                        {% endfor %}
+                    </select>
+            </div>
+        </div>
+        <div class="container-center">
+            <button type="button" class="btn-save" id="searchBtn">Search</button>
+        </div>
     </div>
     <div class="table-container">
         <table class="table">
@@ -29,5 +63,49 @@
             
         </table>
     </div>
+    <br>
+    <span >
+        {% if trailers.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ trailers.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ trailers.number }} of {{ trailers.paginator.num_pages }}.
+        </span>
+
+        {% if trailers.has_next %}
+            <a href="?page={{ trailers.next_page_number }}">next</a>
+            <a href="?page={{ trailers.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
 </div>
+<script>
+const searchBtn = document.getElementById("searchBtn");
+const idInput = document.getElementById("id-input");
+const titleInput=document.getElementById("title-input");
+const fromInput=document.getElementById("from-input");
+const toInput=document.getElementById("to-input");
+const castInput=document.getElementById("cast-input");
+const categoryInput = document.getElementById("category-input");
+searchBtn.addEventListener("click",()=>{
+    let url = "{% url 'Trailers:viewTrailers' %}?"
+    if (idInput.value.trim() != ""){
+        url = url+"id="+idInput.value.trim()+"&";
+    }
+    if (titleInput.value.trim() != ""){
+        url = url+"title="+titleInput.value.trim()+"&";
+    }
+    if (fromInput.value.trim() != ""){
+        url = url+"from="+fromInput.value.trim()+"&";
+    }
+    if (toInput.value.trim() != ""){
+        url = url+"to="+toInput.value.trim()+"&";
+    }
+    if (categoryInput.value.trim() != "no"){
+        url = url+"category="+categoryInput.value;
+    }
+    location.href = url;
+});
+</script>
 {% endblock content %}
