@@ -1,4 +1,3 @@
-import this
 from django import forms
 from django.db import models
 from django.forms import CheckboxSelectMultiple, DateInput, FileInput, ModelForm, ModelMultipleChoiceField, TextInput, Textarea
