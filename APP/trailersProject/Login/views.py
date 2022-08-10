@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from django.contrib import auth
 from django.contrib.auth import logout
+from django.urls import reverse
 from .models import UserForm
 # Create your views here.
 def login(request):
@@ -15,6 +16,7 @@ def login(request):
             return render(request,"login/login.html", context)
         user = auth.authenticate(username=username, password=password)
         if user is not None:
+            print(user.is_staff)
             if user.is_staff:
                 auth.login(request, user)
                 if request.POST.get('rememberme', '') != 'on':
@@ -52,4 +54,26 @@ def myAccount(request):
 
 def changePassword(request):
     context = {}
+    if request.method == "POST":
+        try:
+            user = request.user
+            old = request.POST["old"]
+            new = request.POST["new"]
+            if user.check_password(old):
+                user.set_password(new)
+                user.save()
+                return redirect("Login:changePassword")
+            return redirect(reverse("Login:changePassword")+ '?error=True&errorm=Old password is not correct')
+            
+        except Exception as e:
+            context["error"]=True
+            context["errorMessage"]=e
+    else:
+        try:
+            if request.GET["error"]:
+                context["error"]=True
+                context["errorMessage"]= request.GET["errorm"]
+        except:
+            pass
     return render(request,"login/password.html",context)
+
