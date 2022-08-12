@@ -23,5 +23,7 @@ urlpatterns = [
     #path('admin/', admin.site.urls),
     path('login/', include("Login.urls")),
     path('trailers/', include("Trailers.urls")),
+    path('api/trailers/', include("Trailers.api_urls")),
+    path('api/login/', include("Login.api_urls")),
     path('', login_required(views.home),name="home")
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

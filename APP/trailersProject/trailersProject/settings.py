@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'Login',
     'Trailers',
     'django_cleanup.apps.CleanupConfig',
+    'rest_framework',
+    'rest_framework.authtoken',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +57,6 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'trailersProject.urls'
-#'DIRS': [os.path.join(BASE_DIR, 'plantillas')]
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -131,3 +132,10 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
+}
