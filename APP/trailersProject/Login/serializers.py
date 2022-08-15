@@ -56,9 +56,31 @@ class ChangePasswordSerializer(serializers.ModelSerializer):
 
     def update(self, instance):
         old = self.validated_data["old"]
-        #old = self.data.get('old')
         if not instance.check_password(old):
             raise serializers.ValidationError({"old": "Old password is not correct"})
         instance.set_password(self.data.get('new'))
         instance.save()
+        return instance
+
+class UpdateUserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'first_name', 'last_name')
+        extra_kwargs = {
+            'email': {'default':""},
+            'first_name': {'default':""},
+            'last_name': {'default':""},
+        }
+
+    def update(self):
+        instance = self.instance
+        validated_data = self.validated_data
+        instance.first_name = validated_data['first_name']
+        instance.last_name = validated_data['last_name']
+        instance.email = validated_data['email']
+        instance.username = validated_data['username']
+
+        instance.save()
+
         return instance
