@@ -2,8 +2,9 @@ from rest_framework.views import APIView
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from .models import User
-from .serializers import RegisterSerializer, LoginSerializer
-
+from .serializers import RegisterSerializer, LoginSerializer, ChangePasswordSerializer
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.authentication import TokenAuthentication
 
 class registerView(APIView):
     queryset = User.objects.all()
@@ -33,13 +34,33 @@ class loginView(APIView):
             data = {
                 'ok':True,
                 'user': user,
-                'access_token': token
+                'token': token
             }
             return Response(data)
         dic = {}
         dic.update(serializer.errors)
         dic["ok"]=False
         return Response(dic)
+
+class changePassword(APIView):
+    authentication_classes = [TokenAuthentication]
+    permission_classes =  [IsAuthenticated]
+    serializer_class = ChangePasswordSerializer
+    def put(self, request):
+        serializer = ChangePasswordSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.update(request.user)
+            data = {
+                'ok':True,
+                
+            }
+            return Response(data)
+        dic = {}
+        dic.update(serializer.errors)
+        dic["ok"]=False
+        return Response(dic)
+        
+
         
 
 

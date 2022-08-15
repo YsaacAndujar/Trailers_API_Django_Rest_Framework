@@ -10,13 +10,9 @@ class LoginSerializer(serializers.Serializer):
     password = serializers.CharField(max_length=150)
 
     def validate(self, data):
-
-        # authenticate recibe las credenciales, si son válidas devuelve el objeto del usuario
         user = authenticate(username=data['username'], password=data['password'])
         if not user:
             raise serializers.ValidationError('Username or password are not valid')
-
-        # Guardamos el usuario en el contexto para posteriormente en create recuperar el token
         self.context['user'] = user
         return data
 
@@ -27,7 +23,6 @@ class LoginSerializer(serializers.Serializer):
         return self.context['user'], token.key
 
 class RegisterSerializer(serializers.ModelSerializer):
-    
     password = serializers.CharField(write_only=True, required=True, validators=[validate_password])
 
     class Meta:
@@ -50,3 +45,20 @@ class RegisterSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+
+class ChangePasswordSerializer(serializers.ModelSerializer):
+    old = serializers.CharField(write_only=True, required=True)
+    new = serializers.CharField(write_only=True, required=True, validators=[validate_password])
+
+    class Meta:
+        model = User
+        fields = ('old', 'new')
+
+    def update(self, instance):
+        old = self.validated_data["old"]
+        #old = self.data.get('old')
+        if not instance.check_password(old):
+            raise serializers.ValidationError({"old": "Old password is not correct"})
+        instance.set_password(self.data.get('new'))
+        instance.save()
+        return instance
