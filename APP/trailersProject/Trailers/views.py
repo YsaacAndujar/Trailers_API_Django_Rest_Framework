@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render
 from django.urls import reverse
 from .models import CategoryForm, TrailersForm, Category, Trailers
 from django.db.models import Case, F, FloatField, Value, When, Value
+from django.db.models import Q
 # Create your views here.
 def addTrailer(request):
     context = {}
@@ -77,7 +78,7 @@ def viewTrailers(request):
         pass
     try:
         context["title"]=request.GET["title"]
-        trailers=trailers.filter(title__icontains=context["title"])
+        trailers=trailers.filter(Q(title__icontains=context["title"])|Q(cast__icontains=context["title"]))
         trailers = trailers.annotate(
             k1 = Case(
                 When(title__icontains=context["title"], then=Value(1.0)),
@@ -89,7 +90,12 @@ def viewTrailers(request):
                 default=Value(0.0),
                 output_field=FloatField(),
             ),
-            rank= F("k1")+ F("k2"),
+            k3 = Case(
+                When(cast__icontains=context["title"], then=Value(1.0)),
+                default=Value(0.0),
+                output_field=FloatField(),
+            ),
+            rank= F("k1")+ F("k2")+F("k3"),
         ).order_by("-rank")
     except Exception as e:
         pass
@@ -100,7 +106,7 @@ def viewTrailers(request):
         pass
     try:
         context["to"]=request.GET["to"]
-        trailers = trailers.filter(release_date__gte=context["to"])
+        trailers = trailers.filter(release_date__lte=context["to"])
     except:
         pass
     
@@ -118,7 +124,7 @@ def viewTrailers(request):
     return render(request, "trailers/view-trailers.html",context)
 
 def viewCategories(request):
-    categories = Category.objects.all().order_by("-id")
+    categories = Category.objects.all().order_by("name")
     context = {}
     try:
         context["id"]=request.GET["id"]

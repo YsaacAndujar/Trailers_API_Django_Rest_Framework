@@ -4,6 +4,7 @@ from .models import Category, Trailers
 from django.db.models import Case, F, FloatField, Value, When, Value
 from django.core.paginator import Paginator
 from .serializers import *
+from django.db.models import Q
 
 class previewTrailersView(APIView):
     def get(self, request):
@@ -16,7 +17,7 @@ class previewTrailersView(APIView):
             pass
         try:
             context["title"]=request.GET["title"]
-            trailers=trailers.filter(title__icontains=context["title"])
+            trailers=trailers.filter(Q(title__icontains=context["title"])|Q(cast__icontains=context["title"]))
             trailers = trailers.annotate(
                 k1 = Case(
                     When(title__icontains=context["title"], then=Value(1.0)),
@@ -28,7 +29,12 @@ class previewTrailersView(APIView):
                     default=Value(0.0),
                     output_field=FloatField(),
                 ),
-                rank= F("k1")+ F("k2"),
+                k3 = Case(
+                When(cast__icontains=context["title"], then=Value(1.0)),
+                default=Value(0.0),
+                output_field=FloatField(),
+                ),
+                rank= F("k1")+ F("k2")+F("k3"),
             ).order_by("-rank")
         except Exception as e:
             pass
@@ -39,18 +45,17 @@ class previewTrailersView(APIView):
             pass
         try:
             context["to"]=request.GET["to"]
-            trailers = trailers.filter(release_date__gte=context["to"])
+            trailers = trailers.filter(release_date__lte=context["to"])
         except:
             pass
         
-        paginator = Paginator(trailers, 2)
+        paginator = Paginator(trailers, 10)
         page = 1
         try:
             page = int(request.GET.get('page'))
         except:
             pass
         trailers = paginator.get_page(page)
-       # print(type(paginator.num_pages))
         context["num_pages"]=paginator.num_pages
         context["page"]=page
         context["has_previous"]=trailers.has_previous()

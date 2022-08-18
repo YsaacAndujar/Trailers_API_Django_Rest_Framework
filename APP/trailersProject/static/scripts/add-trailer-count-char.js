@@ -19,11 +19,11 @@ countChar(castP, 100, castInput.value.length);
 const descriptionP = document.getElementById("description-p");
 const descriptionInput = document.getElementById("description-input");
 descriptionInput.addEventListener("input", (e)=>{
-    let max = 200;
+    let max = 700;
     let are = e.target.value.length;
     countChar(descriptionP, max, are);
 });
-countChar(descriptionP, 200, descriptionInput.value.length);
+countChar(descriptionP, 700, descriptionInput.value.length);
 
 const codeP = document.getElementById("code-p");
 const codeInput = document.getElementById("code");

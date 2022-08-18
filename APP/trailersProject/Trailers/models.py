@@ -10,7 +10,7 @@ class Category(models.Model):
 class Trailers(models.Model):
     title = models.TextField(max_length=70, verbose_name="Title")
     release_date = models.DateField(null=True, blank=True)
-    description=models.TextField(max_length=200)
+    description=models.TextField(max_length=700)
     cast=models.TextField(max_length=100)
     image =models.ImageField(upload_to='images', blank=True )
     trailerUrl=models.TextField(max_length=15)
@@ -41,9 +41,10 @@ class TrailersForm(ModelForm):
                 }
             ),
             'release_date': DateInput(
-                format=('%m-%d-%Y'),
+
                 attrs={
-                    'type': 'date'
+                    'type': 'date',
+                    'id': 'release_date_input'
                 },
             ),
             'cast': Textarea(
