@@ -2,6 +2,8 @@
 # Trailers_API_Django_Rest_Framework
  
  ------------------------------ Español ------------------------------
+
+Video: https://www.youtube.com/watch?v=QSVky1ARCss&ab_channel=YsaacAndujar
 Creado en Django
 
 Esta aplicación es un BackOffice para una aplicacinion web para poder ver trailers de peliculas.
@@ -12,6 +14,8 @@ Para agregar una pelicula debes ingresar el titulo, dia de estreno, portada, cas
 Esta aplicacion web tambíen tiene varias API hechas con Django Rest Framework. Estas periment obtener los datos de la base de datos para poder visualizarlas en la aplicacion final que tendrá el usuario
 
  ------------------------------ English ------------------------------
+
+Video: https://www.youtube.com/watch?v=QSVky1ARCss&ab_channel=YsaacAndujar
 Built in Django
 
 This application is a BackOffice for a web application to watch movie trailers.
