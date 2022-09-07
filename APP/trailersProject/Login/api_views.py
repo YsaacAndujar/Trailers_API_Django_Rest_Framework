@@ -27,7 +27,7 @@ class loginView(APIView):
     queryset = User.objects.all()
     serializer_class = LoginSerializer
 
-    def get(self, request):
+    def post(self, request):
         serializer = LoginSerializer(data=request.data)
         if serializer.is_valid():
             user, token = serializer.save()
@@ -49,12 +49,7 @@ class changePassword(APIView):
     def put(self, request):
         serializer = ChangePasswordSerializer(data=request.data)
         if serializer.is_valid():
-            serializer.update(request.user)
-            data = {
-                'ok':True,
-                
-            }
-            return Response(data)
+            return Response(serializer.update(instance=request.user))
         dic = {}
         dic.update(serializer.errors)
         dic["ok"]=False
@@ -74,6 +69,12 @@ class updateUserView(APIView):
             return Response(dic)
         dic.update(serializer.errors)
         dic["ok"]=False
+        return Response(dic)
+    def get(self, request):
+        serializer = UpdateUserSerializer(instance=request.user)
+        dic = {}
+        dic.update(serializer.data)
+        dic["ok"]=True
         return Response(dic)
 
         

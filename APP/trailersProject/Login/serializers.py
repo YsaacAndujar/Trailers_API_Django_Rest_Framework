@@ -47,20 +47,22 @@ class RegisterSerializer(serializers.ModelSerializer):
         return user
 
 class ChangePasswordSerializer(serializers.ModelSerializer):
-    old = serializers.CharField(write_only=True, required=True)
-    new = serializers.CharField(write_only=True, required=True, validators=[validate_password])
+    oldP = serializers.CharField(write_only=True, required=True)
+    newP = serializers.CharField(write_only=True, required=True, validators=[validate_password])
 
     class Meta:
         model = User
-        fields = ('old', 'new')
+        fields = ('oldP', 'newP')
 
     def update(self, instance):
-        old = self.validated_data["old"]
-        if not instance.check_password(old):
-            raise serializers.ValidationError({"old": "Old password is not correct"})
-        instance.set_password(self.data.get('new'))
+        oldP = self.validated_data["oldP"]
+        print(instance.username)
+        print(instance.check_password("admin123321"))
+        if not instance.check_password(oldP):
+            return({"ok":False,"oldP": ["Old password is not correct"]})
+        instance.set_password(self.validated_data['newP'])
         instance.save()
-        return instance
+        return {"ok":True}
 
 class UpdateUserSerializer(serializers.ModelSerializer):
 
