@@ -17,7 +17,6 @@ def login(request):
             return render(request,"login/login.html", context)
         user = auth.authenticate(username=username, password=password)
         if user is not None:
-            print(user.is_staff)
             if user.is_staff:
                 auth.login(request, user)
                 if request.POST.get('rememberme', '') != 'on':

@@ -49,7 +49,7 @@ class previewTrailersView(APIView):
         except:
             pass
         
-        paginator = Paginator(trailers, 10)
+        paginator = Paginator(trailers, 8)
         page = 1
         try:
             page = int(request.GET.get('page'))
@@ -64,7 +64,7 @@ class previewTrailersView(APIView):
         context["has_next"]=trailers.has_next()
         if trailers.has_next():
             context["next_page_number"]=trailers.next_page_number()
-        serializer = previewTrailersSerializer(trailers, many=True)
+        serializer = previewTrailersSerializer(trailers, many=True,context={'request': request})
         data={}
         data["trailers"]=serializer.data
         data["context"]=context
