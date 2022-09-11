@@ -77,7 +77,7 @@ class getTrailerView(APIView):
             trailers = Trailers.objects.get(id=pk)
         except Exception as e:
             return Response({"ok":False,"message":repr(e)})
-        serializer = TrailersSerializer(trailers)
+        serializer = TrailersSerializer(trailers,context={'request': request})
         data={}
         data["trailer"]=serializer.data
         data["ok"]=True
